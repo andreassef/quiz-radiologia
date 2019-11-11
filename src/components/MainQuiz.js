@@ -58,6 +58,13 @@ class MainQuiz extends React.Component {
     this.setState({ myAnswer: answer, disabled: false });
   };
   finishHandler = () => {
+    const { myAnswer, answer, score } = this.state;
+
+    if (myAnswer === answer) {
+      this.setState({
+        score: score + 1
+      });
+    }
     if (this.state.currentQuestion === quizData.length - 1) {
       this.setState({
         isEnd: true
@@ -70,9 +77,9 @@ class MainQuiz extends React.Component {
     if (isEnd) {
       return (
         <div className="result">
-          <h3>Game Over your Final score is {this.state.score} points </h3>
+          <h2>Fim de jogo, sua pontuação final foi de {this.state.score} pontos </h2>
           <p>
-            The correct answer's for the questions was
+            As respostas corretas para as questões são
             <ul>
               {quizData.map((item, index) => (
                 <li className="ui floating message options" key={index}>
@@ -87,8 +94,8 @@ class MainQuiz extends React.Component {
       return (
         <div className="App">
           <h1>{this.state.questions} </h1>
-          <span>{`Questions ${currentQuestion}  out of ${quizData.length -
-            1} remaining `}</span>
+          <span>{`Questão ${currentQuestion} de ${quizData.length -
+            1}`}</span>
           {options.map(option => (
             <p
               key={option.id}
@@ -106,13 +113,13 @@ class MainQuiz extends React.Component {
               disabled={this.state.disabled}
               onClick={this.nextQuestionHandler}
             >
-              Next
+              Proximo
             </button>
           )}
           {/* //adding a finish button */}
           {currentQuestion === quizData.length - 1 && (
             <button className="ui inverted button" onClick={this.finishHandler}>
-              Finish
+              Fim
             </button>
           )}
         </div>
